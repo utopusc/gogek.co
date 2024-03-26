@@ -4,13 +4,13 @@ import { LogLevel } from '@/lib/logger';
 
 export const config = {
   site: {
-    name: 'Devias Kit Pro',
-    description: '',
-    colorScheme: 'light',
+    name: 'GoGek.co',
+    description: 'Slogan',
+    colorScheme: 'dark',
     themeColor: '#090a0b',
-    primaryColor: 'neonBlue',
+    primaryColor: 'chateauGreen',
     url: getSiteURL(),
-    version: process.env.NEXT_PUBLIC_SITE_VERSION || '0.0.0',
+    version: process.env.NEXT_PUBLIC_SITE_VERSION || '0.0.1',
   },
   logLevel: process.env.NEXT_PUBLIC_LOG_LEVEL || LogLevel.ALL,
   auth: { strategy: process.env.NEXT_PUBLIC_AUTH_STRATEGY || AuthStrategy.CUSTOM },
