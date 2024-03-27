@@ -1,6 +1,6 @@
 'use client';
 
-import * as React from 'react';
+import React from 'react';
 import RouterLink from 'next/link';
 import Box from '@mui/material/Box';
 import Divider from '@mui/material/Divider';
@@ -9,9 +9,8 @@ import ListItemIcon from '@mui/material/ListItemIcon';
 import MenuItem from '@mui/material/MenuItem';
 import Popover from '@mui/material/Popover';
 import Typography from '@mui/material/Typography';
-import { CreditCard as CreditCardIcon } from '@phosphor-icons/react/dist/ssr/CreditCard';
-import { LockKey as LockKeyIcon } from '@phosphor-icons/react/dist/ssr/LockKey';
-import { User as UserIcon } from '@phosphor-icons/react/dist/ssr/User';
+import { CreditCard as CreditCardIcon, LockKey as LockKeyIcon, User as UserIcon } from '@phosphor-icons/react';
+import { useUser } from '@/hooks/use-user';
 
 import { config } from '@/config';
 import { paths } from '@/paths';
@@ -19,14 +18,18 @@ import { AuthStrategy } from '@/lib/auth/strategy';
 
 import { FirebaseSignOut } from './firebase-sign-out';
 
-const user = {
-  id: 'USR-000',
-  name: 'Sofia Rivers',
-  avatar: '/assets/avatar.png',
-  email: 'sofia@devias.io',
-};
-
 export function UserPopover({ anchorEl, onClose, open }) {
+  const { user, isLoading, error } = useUser(); // useUser hook'unu burada çağır
+
+  // Loading veya error durumunu bileşen içinde yönet
+  if (isLoading) {
+    return <div>Loading...</div>;
+  }
+  if (error) {
+    return <div>Error: {error.message}</div>; // error nesnesinin message özelliğini kullanarak hata mesajını göster
+  }
+
+  // Kullanıcı bilgilerini kullanarak UI'ı oluştur
   return (
     <Popover
       anchorEl={anchorEl}
@@ -37,9 +40,9 @@ export function UserPopover({ anchorEl, onClose, open }) {
       transformOrigin={{ horizontal: 'right', vertical: 'top' }}
     >
       <Box sx={{ p: 2 }}>
-        <Typography>{user.name}</Typography>
+        <Typography>{user?.name}</Typography> {/* Kullanıcı bilgilerine güvenli erişim */}
         <Typography color="text.secondary" variant="body2">
-          {user.email}
+          {user?.email}
         </Typography>
       </Box>
       <Divider />
@@ -65,7 +68,7 @@ export function UserPopover({ anchorEl, onClose, open }) {
       </List>
       <Divider />
       <Box sx={{ p: 1 }}>
-        {config.auth.strategy === AuthStrategy.FIREBASE ? <FirebaseSignOut /> : null}
+        {config.auth.strategy === AuthStrategy.FIREBASE && <FirebaseSignOut />}
       </Box>
     </Popover>
   );

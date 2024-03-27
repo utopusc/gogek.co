@@ -23,6 +23,7 @@ import { MobileNav } from '../mobile-nav';
 import { NotificationsPopover } from '../notifications-popover';
 import { SearchDialog } from '../search-dialog';
 import { UserPopover } from '../user-popover/user-popover';
+import { useUser } from '@/hooks/use-user';
 
 export function MainNav({ items }) {
   const [openNav, setOpenNav] = React.useState(false);
@@ -167,15 +168,17 @@ function LanguageSwitch() {
   );
 }
 
-const user = {
-  id: 'USR-000',
-  name: 'Sofia Rivers',
-  avatar: '/assets/avatar.png',
-  email: 'sofia@devias.io',
-};
 
-function UserButton() {
+export function UserButton() {
+  const { user, isLoading, error } = useUser();
   const popover = usePopover();
+    // Loading veya error durumunu bileşen içinde yönet
+    if (isLoading) {
+      return <div>Loading...</div>;
+    }
+    if (error) {
+      return <div>Error: {error.message}</div>; // error nesnesinin message özelliğini kullanarak hata mesajını göster
+    }
 
   return (
     <React.Fragment>
