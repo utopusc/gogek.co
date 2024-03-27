@@ -1,4 +1,4 @@
-lockfileVersion: '6.1'
+lockfileVersion: '6.0'
 
 settings:
   autoInstallPeers: true
@@ -120,7 +120,7 @@ dependencies:
     specifier: 8.0.0
     version: 8.0.0(react@18.2.0)
   firebase:
-    specifier: 10.8.0
+    specifier: ^10.8.0
     version: 10.8.0
   i18next:
     specifier: 23.10.0
