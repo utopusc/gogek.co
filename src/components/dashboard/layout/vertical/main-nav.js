@@ -203,7 +203,7 @@ export function UserButton() {
           }}
           variant="dot"
         >
-          <Avatar src={user.avatar} />
+          <Avatar src={user?.avatar || '/default/path/to/avatar.jpg'} alt="User Avatar" />
         </Badge>
       </Box>
       <UserPopover anchorEl={popover.anchorRef.current} onClose={popover.handleClose} open={popover.open} />
