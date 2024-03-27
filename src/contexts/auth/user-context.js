@@ -10,25 +10,9 @@ let UserProvider;
 let UserContext;
 
 switch (config.auth.strategy) {
-  case AuthStrategy.CUSTOM:
-    UserContext = CustomUserContext;
-    UserProvider = CustomUserProvider;
-    break;
-  case AuthStrategy.AUTH0:
-    UserContext = Auth0UserContext;
-    UserProvider = Auth0UserProvider;
-    break;
-  case AuthStrategy.COGNITO:
-    UserContext = CognitoUserContext;
-    UserProvider = CognitoUserProvider;
-    break;
   case AuthStrategy.FIREBASE:
     UserContext = FirebaseUserContext;
     UserProvider = FirebaseUserProvider;
-    break;
-  case AuthStrategy.SUPABASE:
-    UserContext = SupabaseUserContext;
-    UserProvider = SupabaseUserProvider;
     break;
   default:
     throw new Error('Invalid auth strategy');
