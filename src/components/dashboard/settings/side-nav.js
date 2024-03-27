@@ -13,7 +13,7 @@ import { LockKey as LockKeyIcon } from '@phosphor-icons/react/dist/ssr/LockKey';
 import { PlugsConnected as PlugsConnectedIcon } from '@phosphor-icons/react/dist/ssr/PlugsConnected';
 import { UserCircle as UserCircleIcon } from '@phosphor-icons/react/dist/ssr/UserCircle';
 import { UsersThree as UsersThreeIcon } from '@phosphor-icons/react/dist/ssr/UsersThree';
-
+import { useUser } from '@/hooks/use-user';
 import { paths } from '@/paths';
 import { isNavItemActive } from '@/lib/is-nav-item-active';
 
@@ -56,7 +56,9 @@ const icons = {
 
 export function SideNav() {
   const pathname = usePathname();
-
+  const { user, isLoading, error } = useUser();
+  if (isLoading) return <div>Loading...</div>;
+  if (error) return <div>Error: {error}</div>;
   return (
     <div>
       <Stack
@@ -88,11 +90,11 @@ export function SideNav() {
           ))}
         </Stack>
         <Stack direction="row" spacing={2} sx={{ alignItems: 'center' }}>
-          <Avatar src="/assets/avatar.png">AV</Avatar>
+          <Avatar src={user.avatar}></Avatar>
           <div>
-            <Typography variant="subtitle1">Sofia Rivers</Typography>
+            <Typography variant="subtitle1">{user.name}</Typography>
             <Typography color="text.secondary" variant="caption">
-              sofia@devias.io
+              {user.email}
             </Typography>
           </div>
         </Stack>
