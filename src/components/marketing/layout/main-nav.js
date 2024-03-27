@@ -20,11 +20,11 @@ import { DropdownTrigger } from '@/components/core/dropdown/dropdown-trigger';
 import { Logo } from '@/components/core/logo';
 
 import { MobileNav } from './mobile-nav';
-import { PagesPopover } from './pages-popover';
+import { _PagesPopover } from './pages-popover'; // eslint-disable-line @typescript-eslint/no-unused-vars, no-unused-vars
 
 export function MainNav() {
   const [openNav, setOpenNav] = React.useState(false);
-  const pathname = usePathname();
+  const _pathname = usePathname(); // eslint-disable-line @typescript-eslint/no-unused-vars, no-unused-vars
 
   return (
     <React.Fragment>
