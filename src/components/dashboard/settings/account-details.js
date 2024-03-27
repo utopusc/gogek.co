@@ -1,13 +1,12 @@
 'use client';
-
-import * as React from 'react';
+import React, { useEffect, useState } from 'react';
 import Avatar from '@mui/material/Avatar';
 import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
 import Card from '@mui/material/Card';
 import CardActions from '@mui/material/CardActions';
 import CardContent from '@mui/material/CardContent';
-import CardHeader from '@mui/material/CardHeader';
+//import CardHeader from '@mui/material/CardHeader';
 import FormControl from '@mui/material/FormControl';
 import FormHelperText from '@mui/material/FormHelperText';
 import InputAdornment from '@mui/material/InputAdornment';
@@ -18,21 +17,33 @@ import Select from '@mui/material/Select';
 import Stack from '@mui/material/Stack';
 import Typography from '@mui/material/Typography';
 import { Camera as CameraIcon } from '@phosphor-icons/react/dist/ssr/Camera';
-import { User as UserIcon } from '@phosphor-icons/react/dist/ssr/User';
-
+//import { User as UserIcon } from '@phosphor-icons/react/dist/ssr/User';
+import { getAuth, onAuthStateChanged } from 'firebase/auth';
 import { Option } from '@/components/core/option';
 
+
+
 export function AccountDetails() {
+  const [fullName, setFullName] = useState('');
+  const [email, setEmail] = useState('');
+  const [photoURL, setPhotoURL] = useState('');
+
+
+
+  useEffect(() => {
+    const auth = getAuth();
+    onAuthStateChanged(auth, (user) => {
+      if (user) {
+        // Kullanıcı oturum açmışsa ve displayName mevcutsa
+        setFullName(user.displayName || 'No Username');
+        setEmail(user.email || 'No Email');
+        setPhotoURL(user.photoURL || '');
+      }
+    });
+  }, []);
+
   return (
     <Card>
-      <CardHeader
-        avatar={
-          <Avatar>
-            <UserIcon fontSize="var(--Icon-fontSize)" />
-          </Avatar>
-        }
-        title="Basic details"
-      />
       <CardContent>
         <Stack spacing={3}>
           <Stack direction="row" spacing={2} sx={{ alignItems: 'center' }}>
@@ -71,7 +82,7 @@ export function AccountDetails() {
                     </Typography>
                   </Stack>
                 </Box>
-                <Avatar src="/assets/avatar.png" sx={{ '--Avatar-size': '100px' }} />
+                <Avatar src={photoURL} sx={{ width: 100, height: 100 }} />
               </Box>
             </Box>
             <Button color="secondary" size="small">
@@ -81,11 +92,11 @@ export function AccountDetails() {
           <Stack spacing={2}>
             <FormControl>
               <InputLabel>Full name</InputLabel>
-              <OutlinedInput defaultValue="Sofia Rivers" name="fullName" />
+              <OutlinedInput defaultValue={fullName} name="fullName" />
             </FormControl>
             <FormControl disabled>
               <InputLabel>Email address</InputLabel>
-              <OutlinedInput name="email" type="email" value="sofia@devias.io" />
+              <OutlinedInput defaultValue={email} name="email" />
               <FormHelperText>
                 Please <Link variant="inherit">contact us</Link> to change your email
               </FormHelperText>
