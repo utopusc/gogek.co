@@ -2,7 +2,7 @@
 
 import * as React from 'react';
 import RouterLink from 'next/link';
-import { usePathname } from 'next/navigation';
+//import { usePathname } from 'next/navigation';
 import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
 import Container from '@mui/material/Container';
@@ -20,11 +20,11 @@ import { DropdownTrigger } from '@/components/core/dropdown/dropdown-trigger';
 import { Logo } from '@/components/core/logo';
 
 import { MobileNav } from './mobile-nav';
-import { _PagesPopover } from './pages-popover'; // eslint-disable-line @typescript-eslint/no-unused-vars, no-unused-vars
+//import { PagesPopover } from './pages-popover';
 
 export function MainNav() {
   const [openNav, setOpenNav] = React.useState(false);
-  const _pathname = usePathname(); // eslint-disable-line @typescript-eslint/no-unused-vars, no-unused-vars
+ // const pathname = usePathname();
 
   return (
     <React.Fragment>
