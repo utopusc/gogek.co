@@ -104,6 +104,9 @@ dependencies:
   '@tiptap/starter-kit':
     specifier: 2.2.4
     version: 2.2.4(@tiptap/pm@2.2.4)
+  auth0:
+    specifier: ^4.3.1
+    version: 4.3.1
   aws-amplify:
     specifier: 6.0.17
     version: 6.0.17
@@ -4674,6 +4677,14 @@ packages:
   /attr-accept@2.2.2:
     resolution: {integrity: sha512-7prDjvt9HmqiZ0cl5CRjtS84sEyhsHP2coDkaZKRKVfCDo9s7iw7ChVmar78Gu9pC4SoR/28wFu/G5JJhTnqEg==}
     engines: {node: '>=4'}
+    dev: false
+
+  /auth0@4.3.1:
+    resolution: {integrity: sha512-VuR/PdNHwXD9QiYUZf8UN0qiv07yJWHKfF2yEhePaPCrpwbEm6lHM6dkN7ylOdseogCkGmvchxYGMga0IPNrCA==}
+    engines: {node: '>=18'}
+    dependencies:
+      jose: 4.15.5
+      uuid: 9.0.1
     dev: false
 
   /available-typed-arrays@1.0.7:
