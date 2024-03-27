@@ -17,11 +17,7 @@ import { config } from '@/config';
 import { paths } from '@/paths';
 import { AuthStrategy } from '@/lib/auth/strategy';
 
-import { Auth0SignOut } from './auth0-sign-out';
-import { CognitoSignOut } from './cognito-sign-out';
-import { CustomSignOut } from './custom-sign-out';
 import { FirebaseSignOut } from './firebase-sign-out';
-import { SupabaseSignOut } from './supabase-sign-out';
 
 const user = {
   id: 'USR-000',

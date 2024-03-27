@@ -1,19 +1,16 @@
+// pages/_middleware.js
+
 import { NextResponse } from 'next/server';
 
-import { config as appConfig } from '@/config';
-import { AuthStrategy } from '@/lib/auth/strategy';
-import { supabaseMiddleware } from '@/lib/auth/supabase/middleware';
+export function middleware(req) {
+    // Burada isteğe bağlı olarak herhangi bir işlem yapabilirsiniz.
+    // Örneğin, bazı loglar tutabilir, istek başlıklarını değiştirebilirsiniz.
+    // Bu örnekte herhangi bir özel işlem yapmıyoruz ve tüm istekleri olduğu gibi bırakıyoruz.
 
-export async function middleware(req) {
-  let res;
-
-  if (appConfig.auth.strategy === AuthStrategy.SUPABASE) {
-    res = await supabaseMiddleware(req);
-  } else {
-    res = NextResponse.next({ headers: req.headers });
-  }
-
-  return res;
+    return NextResponse.next();
 }
 
-export const config = { matcher: ['/auth/:path*', '/dashboard/:path*'] };
+export const config = {
+    // Middleware'in uygulanacağı yolları matcher ile belirtiyoruz.
+    matcher: ['/auth/:path*', '/dashboard/:path*']
+};
