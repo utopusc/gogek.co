@@ -4,11 +4,6 @@ export const paths = {
   contact: '/contact',
   pricing: '/pricing',
   auth: {
-    custom: {
-      signIn: '/auth/custom/sign-in',
-      signUp: '/auth/custom/sign-up',
-      resetPassword: '/auth/custom/reset-password',
-    },
     firebase: {
       signIn: '/auth/firebase/sign-in',
       signUp: '/auth/firebase/sign-up',
