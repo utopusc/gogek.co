@@ -114,15 +114,15 @@ export function Hero() {
         </Box>
         <Box
           sx={{
-            bgcolor: '#8057f4',
+            bgcolor: 'primary.main',
             filter: 'blur(50px)',
-            height: '30px',
+            height: '40px',
             left: '50%',
             position: 'absolute',
             top: 0,
             transform: 'translateX(-50%)',
-            width: '80%',
-            zIndex: 1,
+            width: '100%',
+            zIndex: 2,
           }}
         />
         <Box
