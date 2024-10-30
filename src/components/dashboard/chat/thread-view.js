@@ -10,47 +10,52 @@ import { MessageAdd } from './message-add';
 import { MessageBox } from './message-box';
 import { ThreadToolbar } from './thread-toolbar';
 
-/**
- * This method is used to get the thread from the context based on the thread type and ID.
- * The thread should be loaded from the API in the page, but for the sake of simplicity we are just using the context.
- */
+// Firebase Firestore importları
+import { getFirestoreDb } from '@/lib/firebase/client';
+import { collection, query, orderBy, onSnapshot, addDoc, serverTimestamp } from 'firebase/firestore';
+const db = getFirestoreDb();
+
+
 function useThread(threadId) {
   const { threads } = React.useContext(ChatContext);
-
   return threads.find((thread) => thread.id === threadId);
 }
 
-function useMessages(threadId) {
-  const { messages } = React.useContext(ChatContext);
-
-  return messages.get(threadId) ?? [];
-}
-
 export function ThreadView({ threadId }) {
-  const { createMessage, markAsRead } = React.useContext(ChatContext);
-
   const thread = useThread(threadId);
-
-  const messages = useMessages(threadId);
-
   const messagesRef = React.useRef(null);
 
-  const handleThreadChange = React.useCallback(() => {
-    markAsRead(threadId);
-  }, [threadId, markAsRead]);
-
+  const [messages, setMessages] = React.useState([]);
+  
+  // Firebase'den gerçek zamanlı olarak mesajları almak için useEffect kullanımı
   React.useEffect(() => {
-    handleThreadChange();
-    // eslint-disable-next-line react-hooks/exhaustive-deps -- Prevent infinite loop
+    const messagesCollection = collection(db, 'threads', threadId, 'messages');
+    const q = query(messagesCollection, orderBy('createdAt', 'asc'));
+    const unsubscribe = onSnapshot(q, (snapshot) => {
+      const messagesData = snapshot.docs.map((doc) => ({ id: doc.id, ...doc.data() }));
+      setMessages(messagesData);
+    });
+
+    return () => unsubscribe();
   }, [threadId]);
 
   const handleSendMessage = React.useCallback(
     async (type, content) => {
-      createMessage({ threadId, type, content });
+      const messagesCollection = collection(db, 'threads', threadId, 'messages');
+      await addDoc(messagesCollection, {
+        type,
+        content,
+        createdAt: serverTimestamp(),
+        author: {
+          name: 'Current User', // Dinamik kullanıcı adı
+          avatar: 'https://placekitten.com/40/40', // Kullanıcının profil resmi
+        }
+      });
     },
-    [threadId, createMessage]
+    [threadId]
   );
 
+  // Yeni mesaj geldiğinde listeyi otomatik olarak en alta kaydırma
   React.useEffect(() => {
     if (messagesRef.current) {
       messagesRef.current.scrollTop = messagesRef.current.scrollHeight;
