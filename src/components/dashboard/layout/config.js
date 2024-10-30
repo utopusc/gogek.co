@@ -1,4 +1,5 @@
 import { paths } from '@/paths';
+import { title } from 'process';
 
 export const layoutConfig = {
   navItems: [
@@ -8,6 +9,7 @@ export const layoutConfig = {
       items: [
         { key: 'overview', title: 'Overview', href: paths.dashboard.overview, icon: 'house' },
         { key: 'business', title: 'Business', href: paths.dashboard.analytics, icon: 'chart-pie' },
+        { key: 'chat', title: 'Chat', href: paths.dashboard.chat.base, icon: 'live-chat'},
       ],
     },
     {
